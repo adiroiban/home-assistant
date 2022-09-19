@@ -1,0 +1,9 @@
+assistant_relay:
+  url: http://localhost:3000/assistant
+  method: POST
+  timeout: 30
+  headers:
+    accept: "application/json"
+  payload: '{"user": "{{user}}", "command": "{{command}}"}'
+  content_type:  'application/json; charset=utf-8'
+  verify_ssl: false

@@ -1,0 +1,11 @@
+# services.yaml
+double_click:
+  name: Double click ZHA
+  description: Detect double click ZHA event in software.
+  fields:
+    entity_id:
+      description: The entity ID of the text helper used to track clicks.
+      example: input_text.double_click_helper
+    device_id:
+      description: The button.
+      example: bda46002e78ffb5399fdb9e8bd8b5d33
