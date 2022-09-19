@@ -70,7 +70,7 @@ def handle(hass, data, logger):
         )
 
     hass.bus.fire("some-source-name", {"wow": "Double click detected"})
-    return reset_state(single_click_id, state_id, device_id)
+    return reset_state(state_id, device_id)
 
 
 def schedule_single(single_click_id, state_id, device_id):
