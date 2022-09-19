@@ -1,11 +1,13 @@
 # Detect double click via ZHA  single click events.
 # hass api docs - https://developers.home-assistant.io/docs/dev_101_hass/
+#
+# async usage is not allowed.
 
 #hass.bus.fire("some-source-name", {"wow": "from a Python script!"})
 #hass.services.call("light", "turn_on", {"key": "value"}, False)
 import time
 
-async def handle(hass, data, logger):
+def handle(hass, data, logger):
     """
     Handle the script invocation.
     """
@@ -21,7 +23,7 @@ async def handle(hass, data, logger):
         logger.info("No device_id found in input data")
         return
 
-    state_value = await hass.states.get(state_id)
+    state_value = hass.states.get(state_id)
 
     if not state_value:
         return reset_state(hass, logger, state_id, device_id)
@@ -41,14 +43,13 @@ async def handle(hass, data, logger):
     return reset_state(hass, logger, state_id, device_id)
 
 
-async def reset_state(hass, logger, state_id, device_id):
+def reset_state(hass, logger, state_id, device_id):
     """
     Helper to reset the state.
     """
     logger.info("Reseting state for {}.".format(device_id))
     state_value = '{},{}'.format(time.time(), device_id)
-    await hass.states.set(state_id, state_value)
+    hass.states.set(state_id, state_value)
 
 
-await handle(hass, data, logger)
-
+handle(hass, data, logger)
