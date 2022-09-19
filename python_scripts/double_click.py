@@ -84,5 +84,5 @@ def reset_state(state_id):
     hass.states.set(state_id, str(time.time()))
 
 
-logger.info("Services {}".format(dir(hass.services.services['timer'])))
+logger.info("Services {}".format(hass.services.services['timer']))
 handle(hass, data, logger)
