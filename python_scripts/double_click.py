@@ -1,5 +1,16 @@
 """
 Detect double click via ZHA  single click events.
+
+It needs a timer to track the double clicks.
+The timer is cancelled if a double click is observed.
+The timer is left to finalize for a single click.
+
+There is a hardcoded 2 seconds delay.
+As pressing the button to fast will not help.
+
+To trigger an action on single click or double click, trigger events based
+on the timer.finalized or timer.cancelled events.
+
 hass api docs - https://developers.home-assistant.io/docs/dev_101_hass/
 Check the source code for what you are allowed
 https://github.com/home-assistant/core/blob/dev/homeassistant/components/python_script/__init__.py
@@ -37,25 +48,25 @@ def handle(hass, data, logger):
         logger.info("No single_click_id found in input data")
         return
 
-    state_value = hass.states.get(state_id)
+    timer_state = hass.states.get(single_click_id)
+    if not timer_state:
+        logger.info("No timer found to track double clicks.")
+        return
 
-    if not state_value:
-        return schedule_single(single_click_id, state_id)
+    timer_state = timer_state.state
+    logger.info("Trigger state {}.".format(timer_state))
+    if timer_state == 'idle':
+        # No previous click trigerred.
+        hass.services.call(
+            "timer",
+            "start",
+            {"entity_id": single_click_id, "duration": 2},
+            False,
+            )
+        return
 
-    state_value = state_value.state
-    try:
-        last_time = float(state_value)
-    except Exception:
-        logger.info("Failed to parse state: '{}'".format(state_value))
-        return schedule_single(single_click_id, state_id)
-
-    duration = time.time() - last_time
-    if duration > 1:
-        logger.info("Long double click after {}.".format(duration))
-        # Start a new double-click counter.
-        return schedule_single(single_click_id, state_id)
-
-    logger.info("Trigger double click after {}.".format(duration))
+    # Most probably active.
+    # So we have a second click.
     hass.services.call(
         "timer",
         "cancel",
@@ -63,26 +74,5 @@ def handle(hass, data, logger):
         False,
         )
 
-    hass.bus.fire("double_click", {"entity_id": state_id})
-    return reset_state(state_id)
 
-
-def schedule_single(single_click_id, state_id):
-    hass.services.call(
-        "timer",
-        "start",
-        {"entity_id": single_click_id, "duration": 1},
-        False,
-        )
-    reset_state(state_id)
-
-
-def reset_state(state_id):
-    """
-    Helper to reset the state.
-    """
-    hass.states.set(state_id, str(time.time()))
-
-
-logger.info("Services {}".format(hass.services.services['timer']))
 handle(hass, data, logger)

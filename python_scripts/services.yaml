@@ -4,8 +4,5 @@ double_click:
   description: Detect double click ZHA event in software.
   fields:
     entity_id:
-      description: The entity ID of the text helper used to track clicks.
-      example: input_text.double_click_helper
-    single_click_id:
-      description: The entity ID for the timer used to trigger a single click.
+      description: The entity ID of the timer used to track clicks.
       example: timer.single_click_helper
