@@ -46,9 +46,8 @@ def handle(hass, data, logger):
         last_time, target = state_value.value.split(',')
         last_time = float(last_time)
     except Exception:
-        return reset_state(hass, logger, state_id, device_id)
         logger.info("Failed to parse state: '{}'".format(state_value))
-        return
+        return reset_state(hass, logger, state_id, device_id)
 
     duration = time.time() - last_time
     if duration > 1:
@@ -64,7 +63,6 @@ def reset_state(hass, logger, state_id, device_id):
     """
     Helper to reset the state.
     """
-    logger.info("Reseting state for {}.".format(device_id))
     state_value = '{},{}'.format(time.time(), device_id)
     hass.states.set(state_id, state_value)
 
