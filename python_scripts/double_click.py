@@ -1,11 +1,27 @@
-# Detect double click via ZHA  single click events.
-# hass api docs - https://developers.home-assistant.io/docs/dev_101_hass/
-#
-# async usage is not allowed.
+"""
+Detect double click via ZHA  single click events.
+hass api docs - https://developers.home-assistant.io/docs/dev_101_hass/
+Check the source code for what you are allowed
+https://github.com/home-assistant/core/blob/dev/homeassistant/components/python_script/__init__.py
 
-#hass.bus.fire("some-source-name", {"wow": "from a Python script!"})
-#hass.services.call("light", "turn_on", {"key": "value"}, False)
-import time
+async usage is not allowed.
+
+builtins with limited access (see sourcce code)
+        "datetime": datetime,
+        "sorted": sorted,
+        "time": TimeWrapper(),
+        "dt_util": dt_util,
+        "min": min,
+        "max": max,
+        "sum": sum,
+        "any": any,
+        "all": all,
+        "enumerate": enumerate,
+
+
+hass.bus.fire("some-source-name", {"wow": "from a Python script!"})
+hass.services.call("light", "turn_on", {"key": "value"}, False)
+"""
 
 def handle(hass, data, logger):
     """
