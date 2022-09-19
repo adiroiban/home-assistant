@@ -7,16 +7,16 @@ https://github.com/home-assistant/core/blob/dev/homeassistant/components/python_
 async usage is not allowed.
 
 builtins with limited access (see sourcce code)
-        "datetime": datetime,
-        "sorted": sorted,
-        "time": TimeWrapper(),
-        "dt_util": dt_util,
-        "min": min,
-        "max": max,
-        "sum": sum,
-        "any": any,
-        "all": all,
-        "enumerate": enumerate,
+* datetime
+* sorted
+* time - which is TimeWrapper()
+* dt_util
+* min
+* max
+* sum
+* any
+* all
+* enumerate
 
 
 hass.bus.fire("some-source-name", {"wow": "from a Python script!"})
@@ -39,7 +39,7 @@ def handle(hass, data, logger):
         logger.info("No device_id found in input data")
         return
 
-    state_value = hass.states.get(state_id)
+    state_value = hass.states.get(state_id.state)
 
     if not state_value:
         return reset_state(hass, logger, state_id, device_id)
