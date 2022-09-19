@@ -52,6 +52,7 @@ def handle(hass, data, logger):
 
     duration = time.time() - last_time
     if duration > 1:
+        logger.info("Long double click after {}.".format(duration))
         return reset_state(hass, logger, state_id, device_id)
 
     logger.info("Trigger double click after {}.".format(duration))
