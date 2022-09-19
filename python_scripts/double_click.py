@@ -68,4 +68,5 @@ def reset_state(hass, logger, state_id, device_id):
     hass.states.set(state_id, state_value)
 
 
+logger.info("Called at {}.".format(time.time()))
 handle(hass, data, logger)

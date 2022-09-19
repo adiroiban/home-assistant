@@ -1,6 +1,9 @@
 # Loads default set of integrations. Do not remove.
 default_config:
 
+logger:
+  default: notset
+
 # Text to speech
 tts:
   - platform: google_translate
