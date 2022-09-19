@@ -29,6 +29,7 @@ def handle(hass, data, logger):
     """
     state_id = data.get('entity_id', None)
     device_id = data.get('device_id', None)
+    single_click_id = data.get('single_click_id', None)
     if not state_id:
         logger.info("No entity_id found in input data")
         return
@@ -37,10 +38,14 @@ def handle(hass, data, logger):
         logger.info("No device_id found in input data")
         return
 
+    if not single_click_id:
+        logger.info("No single_click_id found in input data")
+        return
+
     state_value = hass.states.get(state_id)
 
     if not state_value:
-        return reset_state(hass, logger, state_id, device_id)
+        return schedule_single(single_click_id, state_id, device_id)
 
     state_value = state_value.state
     try:
@@ -48,19 +53,37 @@ def handle(hass, data, logger):
         last_time = float(last_time)
     except Exception:
         logger.info("Failed to parse state: '{}'".format(state_value))
-        return reset_state(hass, logger, state_id, device_id)
+        return schedule_single(single_click_id, state_id, device_id)
 
     duration = time.time() - last_time
     if duration > 1:
         logger.info("Long double click after {}.".format(duration))
-        return reset_state(hass, logger, state_id, device_id)
+        # Start a new double-click counter.
+        return schedule_single(single_click_id, state_id, device_id)
 
     logger.info("Trigger double click after {}.".format(duration))
+    hass.services.call(
+        "timer",
+        "cancel",
+        {"entity_id": single_click_id},
+        False,
+        )
+
     hass.bus.fire("some-source-name", {"wow": "Double click detected"})
-    return reset_state(hass, logger, state_id, device_id)
+    return reset_state(single_click_id, state_id, device_id)
 
 
-def reset_state(hass, logger, state_id, device_id):
+def schedule_single(single_click_id, state_id, device_id):
+    hass.services.call(
+        "timer",
+        "start",
+        {"entity_id": single_click_id, "duration": 1},
+        False,
+        )
+    reset_state(state_id, device_id)
+
+
+def reset_state(state_id, device_id):
     """
     Helper to reset the state.
     """
