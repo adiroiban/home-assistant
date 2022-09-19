@@ -27,8 +27,6 @@ def handle(hass, data, logger):
     """
     Handle the script invocation.
     """
-    logger.info("Called at {}.".format(time.time()))
-
     state_id = data.get('entity_id', None)
     device_id = data.get('device_id', None)
     if not state_id:
@@ -56,6 +54,7 @@ def handle(hass, data, logger):
     if duration > 1:
         return reset_state(hass, logger, state_id, device_id)
 
+    logger.info("Trigger double click after {}.".format(duration))
     hass.bus.fire("some-source-name", {"wow": "Double click detected"})
     return reset_state(hass, logger, state_id, device_id)
 
@@ -69,5 +68,4 @@ def reset_state(hass, logger, state_id, device_id):
     hass.states.set(state_id, state_value)
 
 
-logger.info("Called at {}.".format(time.time()))
 handle(hass, data, logger)
