@@ -9,6 +9,3 @@ double_click:
     single_click_id:
       description: The entity ID for the timer used to trigger a single click.
       example: timer.single_click_helper
-    device_id:
-      description: The button.
-      example: bda46002e78ffb5399fdb9e8bd8b5d33
