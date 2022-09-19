@@ -39,15 +39,16 @@ def handle(hass, data, logger):
         logger.info("No device_id found in input data")
         return
 
-    state_value = hass.states.get(state_id.state)
+    state_value = hass.states.get(state_id)
 
     if not state_value:
         return reset_state(hass, logger, state_id, device_id)
 
     try:
-        last_time, target = state_value.split(',')
+        last_time, target = state_value.value.split(',')
         last_time = float(last_time)
     except Exception:
+        return reset_state(hass, logger, state_id, device_id)
         logger.info("Failed to parse state: '{}'".format(state_value))
         return
 
