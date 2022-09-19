@@ -38,14 +38,9 @@ def handle(hass, data, logger):
     """
     Handle the script invocation.
     """
-    state_id = data.get('entity_id', None)
-    single_click_id = data.get('single_click_id', None)
-    if not state_id:
-        logger.info("No entity_id found in input data")
-        return
-
+    single_click_id = data.get('entity_id', None)
     if not single_click_id:
-        logger.info("No single_click_id found in input data")
+        logger.info("No entity_id found in input data")
         return
 
     timer_state = hass.states.get(single_click_id)
