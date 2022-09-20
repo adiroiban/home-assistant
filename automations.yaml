@@ -1,0 +1,437 @@
+- id: '1663518725366'
+  alias: stairs-ligth-toggle
+  description: ''
+  trigger:
+  - device_id: a6740a8f9130db31d7244a41f5feac97
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_on
+  - device_id: c7518a0631ccaa22280a819865b0205f
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_on
+  condition: []
+  action:
+  - type: toggle
+    device_id: bc4c277729f303cfc3a8ff86f70f20fe
+    entity_id: light.ikea_of_sweden_tradfri_bulb_gu10_ww_400lm_light
+    domain: light
+  mode: single
+- id: '1663518892250'
+  alias: stairs-light-bright
+  description: ''
+  trigger:
+  - device_id: a6740a8f9130db31d7244a41f5feac97
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: dim_up
+  - device_id: c7518a0631ccaa22280a819865b0205f
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: dim_up
+  condition: []
+  action:
+  - device_id: bc4c277729f303cfc3a8ff86f70f20fe
+    domain: light
+    entity_id: light.ikea_of_sweden_tradfri_bulb_gu10_ww_400lm_light
+    type: brightness_increase
+  mode: single
+- id: '1663518945620'
+  alias: stairs-light-dim-down
+  description: ''
+  trigger:
+  - device_id: a6740a8f9130db31d7244a41f5feac97
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: dim_down
+  condition: []
+  action:
+  - device_id: bc4c277729f303cfc3a8ff86f70f20fe
+    domain: light
+    entity_id: light.ikea_of_sweden_tradfri_bulb_gu10_ww_400lm_light
+    type: brightness_decrease
+  mode: single
+- id: '1663533568921'
+  alias: roomba-litter
+  description: ''
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.roomba_click_helper
+  condition: []
+  action:
+  - service: rest_command.assistant_relay
+    data:
+      command: start vacuuming the hall
+      user: adi
+  mode: single
+- id: '1663533683915'
+  alias: roomba-all-home
+  description: ''
+  trigger:
+  - platform: event
+    event_type: timer.cancelled
+    event_data:
+      entity_id: timer.roomba_click_helper
+  condition: []
+  action:
+  - service: rest_command.assistant_relay
+    data:
+      command: start vacuuming
+      user: adi
+  mode: single
+- id: '1663533745106'
+  alias: roomba-go-home
+  description: ''
+  trigger:
+  - device_id: bda46002e78ffb5399fdb9e8bd8b5d33
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: dim_up
+  condition: []
+  action:
+  - service: rest_command.assistant_relay
+    data:
+      command: tell roomba to go home
+      user: adi
+  mode: single
+- id: '1663534452264'
+  alias: stairs-light-off-sunrise
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: '10'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: bc4c277729f303cfc3a8ff86f70f20fe
+    entity_id: light.ikea_of_sweden_tradfri_bulb_gu10_ww_400lm_light
+    domain: light
+  mode: single
+- id: '1663534496130'
+  alias: stairs-light-on-sunset
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: '-10'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: bc4c277729f303cfc3a8ff86f70f20fe
+    entity_id: light.ikea_of_sweden_tradfri_bulb_gu10_ww_400lm_light
+    domain: light
+    brightness_pct: 12
+  mode: single
+- id: '1663546472799'
+  alias: Sink-light
+  description: ''
+  trigger:
+  - device_id: b7b90b21610efd686ad6482d44b3680c
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_off
+  condition: []
+  action:
+  - type: toggle
+    device_id: 64571ece256bf5dd231f64eb3ff1b94d
+    entity_id: switch.sink_power_switch_3
+    domain: switch
+  mode: single
+- id: '1663546472799'
+  alias: Sink-light
+  description: ''
+  trigger:
+  - device_id: b7b90b21610efd686ad6482d44b3680c
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_off
+  condition: []
+  action:
+  - type: toggle
+    device_id: 64571ece256bf5dd231f64eb3ff1b94d
+    entity_id: switch.sink_power_switch_3
+    domain: switch
+  mode: single
+- id: '1663546614402'
+  alias: 'Living light toggle '
+  description: ''
+  trigger:
+  - device_id: b7b90b21610efd686ad6482d44b3680c
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_on
+  - device_id: 60c4303e4135464955efbe9b2ecdf024
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_on
+  condition: []
+  action:
+  - type: toggle
+    device_id: 31cd08f9bca9f2d19f8ce4bb9a46c108
+    entity_id: light.ikea_of_sweden_tradfri_bulb_e27_ws_opal_1000lm_light
+    domain: light
+  mode: single
+- id: '1663547369537'
+  alias: wall-light-toggle
+  description: ''
+  trigger:
+  - device_id: b7b90b21610efd686ad6482d44b3680c
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: dim_up
+  condition: []
+  action:
+  - type: toggle
+    device_id: 12d059562d33992e04f7761b436a3f33
+    entity_id: light.wall_light_light
+    domain: light
+  mode: single
+- id: '1663547477184'
+  alias: Living light up
+  description: ''
+  trigger:
+  - device_id: b7b90b21610efd686ad6482d44b3680c
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: right
+  condition: []
+  action:
+  - device_id: 31cd08f9bca9f2d19f8ce4bb9a46c108
+    domain: light
+    entity_id: light.ikea_of_sweden_tradfri_bulb_e27_ws_opal_1000lm_light
+    type: brightness_increase
+  mode: single
+- id: '1663547504605'
+  alias: Living light down
+  description: ''
+  trigger:
+  - device_id: b7b90b21610efd686ad6482d44b3680c
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: left
+  condition: []
+  action:
+  - device_id: 31cd08f9bca9f2d19f8ce4bb9a46c108
+    domain: light
+    entity_id: light.ikea_of_sweden_tradfri_bulb_e27_ws_opal_1000lm_light
+    type: brightness_decrease
+  mode: single
+- id: '1663547714218'
+  alias: 'Wall light up '
+  description: ''
+  trigger:
+  - device_id: b7b90b21610efd686ad6482d44b3680c
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: right
+  condition: []
+  action:
+  - device_id: 12d059562d33992e04f7761b436a3f33
+    domain: light
+    entity_id: light.wall_light_light
+    type: brightness_increase
+  mode: single
+- id: '1663547772352'
+  alias: Wall light down
+  description: ''
+  trigger:
+  - device_id: b7b90b21610efd686ad6482d44b3680c
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: left
+  condition: []
+  action:
+  - device_id: 12d059562d33992e04f7761b436a3f33
+    domain: light
+    entity_id: light.wall_light_light
+    type: brightness_decrease
+  mode: single
+- id: '1663552267434'
+  alias: server-on
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - schedule.start_servers
+  condition:
+  - condition: or
+    conditions:
+    - condition: device
+      type: is_off
+      device_id: 8f30360b08011a222cfd75ed6115021e
+      entity_id: switch.osram_plug_01_switch
+      domain: switch
+    - condition: device
+      type: is_off
+      device_id: 62e4d91a1144d0ed380024785ce70131
+      entity_id: switch.osram_plug_01_switch_2
+      domain: switch
+  action:
+  - type: turn_on
+    device_id: 62e4d91a1144d0ed380024785ce70131
+    entity_id: switch.osram_plug_01_switch_2
+    domain: switch
+  - type: turn_on
+    device_id: 8f30360b08011a222cfd75ed6115021e
+    entity_id: switch.osram_plug_01_switch
+    domain: switch
+  mode: single
+- id: '1663552530851'
+  alias: servers-off
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - schedule.stop_servers
+    attribute: next_event
+  condition:
+  - condition: or
+    conditions:
+    - condition: device
+      type: is_on
+      device_id: 8f30360b08011a222cfd75ed6115021e
+      entity_id: switch.osram_plug_01_switch
+      domain: switch
+    - condition: device
+      type: is_on
+      device_id: 62e4d91a1144d0ed380024785ce70131
+      entity_id: switch.osram_plug_01_switch_2
+      domain: switch
+  action:
+  - type: turn_off
+    device_id: 62e4d91a1144d0ed380024785ce70131
+    entity_id: switch.osram_plug_01_switch_2
+    domain: switch
+  - type: turn_off
+    device_id: 8f30360b08011a222cfd75ed6115021e
+    entity_id: switch.osram_plug_01_switch
+    domain: switch
+  mode: single
+- id: '1663616953253'
+  alias: roomba-action-click
+  description: ''
+  trigger:
+  - device_id: bda46002e78ffb5399fdb9e8bd8b5d33
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_on
+  condition: []
+  action:
+  - service: python_script.double_click
+    data:
+      entity_id: timer.roomba_click_helper
+  mode: single
+- id: '1663640299312'
+  alias: office-light-toggle
+  description: ''
+  trigger:
+  - device_id: a6740a8f9130db31d7244a41f5feac97
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_off
+  condition: []
+  action:
+  - type: toggle
+    device_id: 111c7470a6e61c98010c4f3f1d2683c9
+    entity_id: light.ikea_of_sweden_tradfri_bulb_e27_opal_1000lm_light
+    domain: light
+  mode: single
+- id: '1663640299312'
+  alias: office-light-toggle
+  description: ''
+  trigger:
+  - device_id: a6740a8f9130db31d7244a41f5feac97
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_off
+  condition: []
+  action:
+  - type: toggle
+    device_id: 111c7470a6e61c98010c4f3f1d2683c9
+    entity_id: light.ikea_of_sweden_tradfri_bulb_e27_opal_1000lm_light
+    domain: light
+  mode: single
+- id: '1663642220124'
+  alias: All lights off
+  description: ''
+  trigger:
+  - device_id: 60c4303e4135464955efbe9b2ecdf024
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: dim_up
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 31cd08f9bca9f2d19f8ce4bb9a46c108
+    entity_id: light.ikea_of_sweden_tradfri_bulb_e27_ws_opal_1000lm_light
+    domain: light
+  - type: turn_off
+    device_id: 64571ece256bf5dd231f64eb3ff1b94d
+    entity_id: light.sink_power_light
+    domain: light
+  - type: turn_off
+    device_id: 12d059562d33992e04f7761b436a3f33
+    entity_id: light.wall_light_light
+    domain: light
+  - type: turn_off
+    device_id: 111c7470a6e61c98010c4f3f1d2683c9
+    entity_id: light.ikea_of_sweden_tradfri_bulb_e27_opal_1000lm_light
+    domain: light
+  mode: single
+- id: '1663669717398'
+  alias: roomba-litter-phone-notification
+  description: ''
+  trigger:
+  - type: turned_on
+    platform: device
+    device_id: a7f3979afa2562aa1689325fd2560e88
+    entity_id: binary_sensor.ewelink_ms01_iaszone
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: notify.notify
+    data:
+      message: Litter used
+      title: Litter activity
+      data:
+        actions:
+        - action: action-vacuum-litter
+          title: Start litter vacuum
+  mode: single
+- id: '1663670336404'
+  alias: roomba-litter-do-after-notification
+  description: ''
+  trigger:
+  - platform: event
+    event_type: mobile_app_notification_action
+    event_data:
+      action: action-vacuum-litter
+  condition: []
+  action:
+  - service: rest_command.assistant_relay
+    data:
+      command: start vacuuming the hall
+      user: adi
+  mode: single
