@@ -4,6 +4,22 @@ default_config:
 logger:
   default: info
 
+zha:
+  zigpy_config:
+    ota:
+      ikea_provider: true
+      ledvance_provider: true
+      salus_provider: false
+      inovelli_provider: false
+
+  # format: {ieee}-{endpoint_id}
+  # See endpoint from Zigbee signature.
+  device_config:
+    # Osram plug, connected to sink light.
+    7c:b0:3e:aa:0a:08:24:a7-3:
+      type: "light"
+
+
 # Text to speech
 tts:
   - platform: google_translate

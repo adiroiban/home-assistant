@@ -1,5 +1,10 @@
 """
-Detect double click via ZHA  single click events.
+Detect double click via ZHA single click events.
+
+This is an ugly hack that doesn't work for very quick clicks.
+As HA will not execute the script that fast.
+
+The single and double click events are implemented using a hack via timers.
 
 It needs a timer to track the double clicks.
 The timer is cancelled if a double click is observed.
@@ -14,25 +19,8 @@ on the timer.finalized or timer.cancelled events.
 hass api docs - https://developers.home-assistant.io/docs/dev_101_hass/
 Check the source code for what you are allowed
 https://github.com/home-assistant/core/blob/dev/homeassistant/components/python_script/__init__.py
-
-async usage is not allowed.
-
-builtins with limited access (see sourcce code)
-* datetime
-* sorted
-* time - which is TimeWrapper()
-* dt_util
-* min
-* max
-* sum
-* any
-* all
-* enumerate
-
-
-hass.bus.fire("some-source-name", {"wow": "from a Python script!"})
-hass.services.call("light", "turn_on", {"key": "value"}, False)
 """
+
 
 def handle(hass, data, logger):
     """
@@ -62,6 +50,7 @@ def handle(hass, data, logger):
 
     # Most probably active.
     # So we have a second click.
+    # Cancel the initial single click.
     hass.services.call(
         "timer",
         "cancel",
